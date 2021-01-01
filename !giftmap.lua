@@ -1,5 +1,5 @@
 script_name("/giftmap")
-script_version("0101.2021")
+script_version("01.01.2021")
 script_author("Serhiy_Rubin", "qrlk")
 script_properties("work-in-pause")
 
