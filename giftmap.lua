@@ -9,7 +9,7 @@ local map, checkpoints = {}, {}
 local gift, wh = {}, false
 
 local chatTag = "{FF5F5F}"..thisScript().name.."{ffffff}"
-r = require 'inspect'
+
 function main() 
     if not isSampLoaded() or not isSampfuncsLoaded() then
         return
@@ -50,7 +50,7 @@ function main()
     )
 
     map_ico = inicfg.load({}, "gift")
-    print(r(map_ico))
+
     inicfg.save(map_ico, "gift")
 	
 	sampAddChatMessage((chatTag.." by {2f72f7}Serhiy_Rubin{ffffff} & {348cb2}qrlk{ffffff} successfully loaded!"), -1)
