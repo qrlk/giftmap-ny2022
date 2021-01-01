@@ -1,5 +1,5 @@
 script_name("/giftmap")
-script_version("01.01.2021")
+script_version("01.01.2021-1")
 script_author("Serhiy_Rubin", "qrlk")
 script_properties("work-in-pause")
 
@@ -507,13 +507,12 @@ function main()
 								else
 									changeBlipColour(map[key], 0xFF0000FF)
 								end
-                            else
+                            else							
 								if isAnyPickupAtCoords(coord.x, coord.y, coord.z) then
-									changeBlipColour(map[key], 0x00FF00FF)
+									changeBlipColour(map[key], 0x00FFFFFF)
 								else
-									changeBlipColour(map[key], 0xFF0000FF)
+									changeBlipColour(map[key], 0x00FF00FF)
 								end
-                                changeBlipColour(map[key], 0x00FF00FF)
                             end
                         else
                             changeBlipScale(map[key], 2)
