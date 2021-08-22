@@ -4,6 +4,7 @@ script_name("/giftmap")
 script_version("01.01.2021-1")
 script_author("Serhiy_Rubin", "qrlk")
 script_properties("work-in-pause")
+script_url("https://github.com/qrlk/giftmap")
 
 local sampev = require "lib.samp.events"
 local inicfg = require "inicfg"
