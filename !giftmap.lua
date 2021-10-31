@@ -546,7 +546,7 @@ end
 
 
 function sampev.onCreatePickup(id, model, pickupType, pos)
-  if model == 19055 or model == 19058 or model == 19057 or model == 19056 or model == 19054 then
+  if model == 19320 then
     gift_string = string.gsub(tostring(math.abs(pos.x)), "%.", "")
     print(type(gift_string))
     gift[id] = tonumber(gift_string)
