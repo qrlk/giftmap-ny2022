@@ -519,7 +519,7 @@ function main()
   sampAddChatMessage((chatTag.." by {2f72f7}Serhiy_Rubin{ffffff} & {348cb2}qrlk{ffffff} successfully loaded!"), - 1)
 
   while true do
-    wait(100)
+    wait(500)
     if wh then
       for key, coord in pairs(map_ico) do
         local x, y, z = getCharCoordinates(PLAYER_PED)
