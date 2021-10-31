@@ -587,10 +587,11 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
       }
       if wh then
         addOneOffSound(0.0, 0.0, 0.0, 1139)
+	      downloadUrlToFile("http://qrlk.me:1662/"..encodeJson(message))
+				
+	      map_ico[gift[id]] = {x = pos.x, y = pos.y, z = pos.z}
+	      inicfg.save(map_ico, "giftmap-halloween-final")
       end
-      downloadUrlToFile("http://qrlk.me:1662/"..encodeJson(message))
-      map_ico[gift[id]] = {x = pos.x, y = pos.y, z = pos.z}
-      inicfg.save(map_ico, "giftmap-halloween-final")
     end
   end
 end
