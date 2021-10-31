@@ -226,11 +226,11 @@ end
 function sampev.onCreatePickup(id, model, pickupType, pos)
   if model == 19320 then
     gift_string = string.gsub(tostring(math.abs(pos.x)), "%.", "")
-    print(type(gift_string))
-    gift[id] = tonumber(gift_string)
+		gift_string = math.modf(tonumber(gift_string),10)
+    gift[id] = gift_string
     if map_ico[gift[id]] == nil then
       local message = {
-        gift_string = tonumber(gift_string),
+        gift_string = gift_string,
         x = pos.x,
         y = pos.y,
         z = pos.z,
