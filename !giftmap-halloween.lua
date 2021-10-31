@@ -1,6 +1,6 @@
 require 'lib.moonloader'
 
-script_name("/giftmap-h")
+script_name("/giftmaph")
 script_version("31.10.2021")
 script_author("Serhiy_Rubin", "qrlk")
 script_properties("work-in-pause")
@@ -26,31 +26,37 @@ function main()
   openchangelog("giftmapchangelog", "http://qrlk.me/changelog/giftmap-halloween")
   -- вырежи тут, если хочешь отключить проверку обновлений
 
+	function switch()
+		wh = not wh
+		local count = 0
+		for k, v in pairs(map_ico) do
+			count = count + 1
+		end
+		if not wh then
+			if map_ico ~= nil then
+				for id, data in pairs(map_ico) do
+					removeBlip(map[id])
+					deleteCheckpoint(checkpoints[id])
+				end
+				map, checkpoints = {}, {}
+			end
+		else
+			sampShowDialog(5557, "\t"..chatTag.." by {2f72f7}Serhiy_Rubin{ffffff}, {348cb2}qrlk", "{FF5F5F}Активация{ffffff}:\nВведите {2f72f7}/giftmaph{ffffff}, чтобы включить/выключить скрипт.\n\n{FF5F5F}Event{ffffff}:\nНа карте есть 90 точек, где спавнятся тыквы. Одновременно активны 15/90 тыкв.\nТыквы дают HW coins, их можно менять на призы.\nСейчас скрипт знает о "..count.." / 90 тыквах.\nКогда вы заметите тыкву, она добавится в вашу локальную базу.\n\n{FF5F5F}Как это работает?{ffffff}\nНа радаре появятся метки точек спавна подарков в пределах 600м.\nС помощью чекпоинтов вы сможете сориентироваться.\nВыйдя в меню и открыв карту, вы сможете увидеть все подарки.\n\n{FF5F5F}Важно{ffffff}:\nЕсли точка занята, не надо захватывать её/толпиться на ней.\nЕсли вы займете свободную точку, подарки будут появляться быстрее.\nЗахватив точку силой, вы только замедлите процесс их спавна.\nПодарков на карте всего 15/90, так что нужно занять 76 точек для быстрейшего фарма.\n\n{FF5F5F}Обозначения:{ffffff}\n* Маленькая белая метка - вне зоны прорисовки.\n* Большая красная метка - точка занята игроками.\n* Большая зелёная метка - точка свободна.\n* Большая голубая метка - на точке есть подарок.\n\n{FF5F5F}Синхронизации точек не будет и вот почему{ffffff}:\nЧтобы у админов не было возможности отследить юзеров.\n\n{FF5F5F}Ссылки:{ffffff}\n* https://github.com/qrlk/giftmap-halloween\n* https://vk.com/rubin.mods", "OK")
+		end
+
+
+
+		printStringNow((wh and "ON, DB: " .. count .. "/90" or "OFF, DB: " .. count .. "/90"), 1000)
+	end
   sampRegisterChatCommand(
     "giftmap-h",
-    function()
-      wh = not wh
-
-      if not wh then
-        if map_ico ~= nil then
-          for id, data in pairs(map_ico) do
-            removeBlip(map[id])
-            deleteCheckpoint(checkpoints[id])
-          end
-          map, checkpoints = {}, {}
-        end
-      else
-        sampShowDialog(5557, "\t"..chatTag.." by {2f72f7}Serhiy_Rubin{ffffff}, {348cb2}qrlk", "{FF5F5F}Активация{ffffff}:\nВведите {2f72f7}/giftmap-h{ffffff}, чтобы включить/выключить скрипт.\n\n{FF5F5F}Важно{ffffff}:\nЕсли точка занята, не надо захватывать её/толпиться на ней.\nЕсли вы займете свободную точку, подарки будут появляться быстрее.\nЗахватив точку силой, вы только замедлите процесс их спавна.\nПодарков всего 15, так что нужно занять 76 точек.\n\n{FF5F5F}Как это работает?{ffffff}\nНа радаре появятся метки точек спавна подарков в пределах 600м.\nС помощью чекпоинтов вы сможете сориентироваться.\nВыйдя в меню и открыв карту, вы сможете увидеть все подарки.\n\n{FF5F5F}Обозначения:{ffffff}\n* Маленькая белая метка - вне зоны прорисовки.\n* Большая красная метка - точка занята игроками.\n* Большая зелёная метка - точка свободна.\n* Большая голубая метка - на точке есть подарок.\n\n{FF5F5F}Синхронизации точек не будет и вот почему{ffffff}:\nЧтобы у админов не было возможности отследить юзеров.\n\n{FF5F5F}Ссылки:{ffffff}\n* https://github.com/qrlk/giftmap-halloween\n* https://vk.com/rubin.mods", "OK")
-      end
-
-      local count = 0
-      for k, v in pairs(map_ico) do
-        count = count + 1
-      end
-
-      printStringNow((wh and "ON, DB: " .. count .. "/90" or "OFF, DB: " .. count .. "/90"), 1000)
-    end
+  	switch
   )
+
+	sampRegisterChatCommand(
+		"giftmaph",
+		switch
+	)
 
   map_ico = inicfg.load(
     {
