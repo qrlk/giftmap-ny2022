@@ -9,7 +9,7 @@
 <img src="https://img.shields.io/date/1637688845?label=released" >
 </p>
 
-A **[moonloader](https://gtaforums.com/topic/890987-moonloader/)** script designed to cheat on **[Samp-Rp's Halloween event](https://samp-rp.su/threads/halloween-event-srpcoins-za-aktivnost-igra-v-kalmara-counter-strike-i-drugoe.2344523/)**.
+A **[moonloader](https://gtaforums.com/topic/890987-moonloader/)** script designed to cheat at the **[Samp-Rp's Halloween event](https://samp-rp.su/threads/halloween-event-srpcoins-za-aktivnost-igra-v-kalmara-counter-strike-i-drugoe.2344523/)**.
 
 It requires **[CLEO 4+](http://cleo.li/?lang=ru)**, **[SAMPFUNCS 5+](https://blast.hk/threads/17/)** and **[SAMP.Lua](https://github.com/THE-FYP/SAMP.Lua)**.
 
