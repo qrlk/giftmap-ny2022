@@ -54,7 +54,7 @@ function main()
 
   map_ico = inicfg.load(
     {
-     
+
   }, "giftmap-halloween")
 
   inicfg.save(map_ico, "giftmap-halloween")
@@ -122,15 +122,15 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
     print(type(gift_string))
     gift[id] = tonumber(gift_string)
     if map_ico[gift[id]] == nil then
-	  local message = {
-	    gift_string = tonumber(gift_string),
-		x = pos.x,
-		y = pos.y,
-		z = pos.z,
-	  }
-	  if wh then
-		addOneOffSound(0.0, 0.0, 0.0, 1139)
-	  end
+      local message = {
+        gift_string = tonumber(gift_string),
+        x = pos.x,
+        y = pos.y,
+        z = pos.z,
+      }
+      if wh then
+        addOneOffSound(0.0, 0.0, 0.0, 1139)
+      end
       downloadUrlToFile("http://qrlk.me:1662/"..encodeJson(message))
       map_ico[gift[id]] = {x = pos.x, y = pos.y, z = pos.z}
       inicfg.save(map_ico, "giftmap-halloween")
