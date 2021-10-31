@@ -12,7 +12,7 @@ from sanic_limiter import Limiter
 def get_remote_address(request):
         return request.ip
 
-app = Sanic("MyHelloWorldApp")
+app = Sanic("giftmaph")
 limiter = Limiter(app, key_func=get_remote_address)
 
 connection = sqlite3.connect("giftmap-halloween.db")
