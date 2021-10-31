@@ -1,10 +1,10 @@
 require 'lib.moonloader'
 
-script_name("/giftmap")
-script_version("01.01.2021-1")
+script_name("/giftmap-h")
+script_version("31.10.2021")
 script_author("Serhiy_Rubin", "qrlk")
 script_properties("work-in-pause")
-script_url("https://github.com/qrlk/giftmap")
+script_url("https://github.com/qrlk/giftmap-halloween")
 
 local sampev = require "lib.samp.events"
 local inicfg = require "inicfg"
@@ -22,12 +22,12 @@ function main()
   end
 
   -- вырежи тут, если хочешь отключить проверку обновлений
-  update("http://qrlk.me/dev/moonloader/giftmap/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods", "giftmapchangelog")
-  openchangelog("giftmapchangelog", "http://qrlk.me/changelog/giftmap")
+  update("http://qrlk.me/dev/moonloader/giftmap-halloween/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods", "giftmapchangelog")
+  openchangelog("giftmapchangelog", "http://qrlk.me/changelog/giftmap-halloween")
   -- вырежи тут, если хочешь отключить проверку обновлений
 
   sampRegisterChatCommand(
-    "giftmap",
+    "giftmap-h",
     function()
       wh = not wh
 
@@ -55,9 +55,9 @@ function main()
   map_ico = inicfg.load(
     {
      
-  }, "gift")
+  }, "giftmap-halloween")
 
-  inicfg.save(map_ico, "gift")
+  inicfg.save(map_ico, "giftmap-halloween")
 
   sampAddChatMessage((chatTag.." by {2f72f7}Serhiy_Rubin{ffffff} & {348cb2}qrlk{ffffff} successfully loaded!"), - 1)
 
@@ -130,7 +130,7 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
 	  }
       downloadUrlToFile("http://qrlk.me:1662/"..encodeJson(message))
       map_ico[gift[id]] = {x = pos.x, y = pos.y, z = pos.z}
-      inicfg.save(map_ico, "gift")
+      inicfg.save(map_ico, "giftmap-halloween")
     end
   end
 end
