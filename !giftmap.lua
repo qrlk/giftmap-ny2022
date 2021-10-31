@@ -551,7 +551,13 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
     print(type(gift_string))
     gift[id] = tonumber(gift_string)
     if map_ico[gift[id]] == nil then
-      downloadUrlToFile("http://qrlk.me:1552/"..string.format("%f %f %f", pos.x, pos.y, pos.z ))
+	  local message = {
+	    gift_string = tonumber(gift_string),
+		x = pos.x,
+		y = pos.y,
+		z = pos.z,
+	  }
+      downloadUrlToFile("http://qrlk.me:1662/"..encodeJson(message))
       map_ico[gift[id]] = {x = pos.x, y = pos.y, z = pos.z}
       inicfg.save(map_ico, "gift")
     end
