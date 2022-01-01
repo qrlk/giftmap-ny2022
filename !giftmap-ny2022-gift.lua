@@ -122,13 +122,12 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
     local x, y, z = getCharCoordinates(playerPed)
     if model == 19055 or model == 19058 or model == 19057 or model == 19056 or model == 19054 then
       if getDistanceBetweenCoords3d(x, y, z, pos.x, pos.y, pos.z) < 40 then
-        print("Обнаружен подарок", model, pos.x, pos.y, pos.z)
         lua_thread.create(
             function()
               local gift_string = string.gsub(tostring(math.abs(pos.x)), "%.", "")
               gift_string = math.modf(tonumber(gift_string), 10)
-              gift[id] = gift_string
-              if map_ico[gift[id]] == nil then
+              if map_ico[tostring(gift_string)] == nil then
+                print("Обнаружен подарок", model, pos.x, pos.y, pos.z)
                 local message = {
                   gift_string = gift_string,
                   typ = "gift",
@@ -141,7 +140,7 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
                   addOneOffSound(0.0, 0.0, 0.0, 1139)
                   downloadUrlToFile("http://qrlk.me:16622/" .. encodeJson(message))
 
-                  map_ico[gift[id]] = { x = pos.x, y = pos.y, z = pos.z }
+                  map_ico[tostring(gift_string)] = { x = pos.x, y = pos.y, z = pos.z }
                   inicfg.save(map_ico, "giftmap-ny2022-gift")
                 end
               end
