@@ -125,13 +125,14 @@ function sampev.onCreateObject(f, ff)
     if ff.modelId == 19352 then
       local x, y, z = getCharCoordinates(playerPed)
       if ff.drawDistance == 25 and getDistanceBetweenCoords3d(x, y, z, ff.position.x, ff.position.y, ff.position.z) < 30 then
-        print("Обнаружен снеговик", ff.position.x, ff.position.y, ff.position.z)
         lua_thread.create(
             function()
               local gift_string = string.gsub(tostring(math.abs(ff.position.x)), "%.", "")
               gift_string = math.modf(tonumber(gift_string), 10)
-              gift[f] = gift_string
-              if map_ico[gift[f]] == nil then
+              if map_ico[tostring(gift_string)] == nil then
+                print("Обнаружен снеговик",f, ff.position.x, ff.position.y, ff.position.z)
+                --print(require('inspect')(map_ico), map_ico[gift_string], gift_string)
+
                 local message = {
                   gift_string = gift_string,
                   typ = "snegovik",
@@ -144,7 +145,7 @@ function sampev.onCreateObject(f, ff)
                   addOneOffSound(0.0, 0.0, 0.0, 1139)
                   downloadUrlToFile("http://qrlk.me:16622/" .. encodeJson(message))
 
-                  map_ico[gift[f]] = {x = ff.position.x, y = ff.position.y, z = ff.position.z}
+                  map_ico[tostring(gift_string)] = {x = ff.position.x, y = ff.position.y, z = ff.position.z}
                   inicfg.save(map_ico, "giftmap-ny2022-snow")
                 end
               end
