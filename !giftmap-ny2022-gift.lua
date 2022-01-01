@@ -21,10 +21,10 @@ function main()
     wait(0)
   end
 
-  ---- вырежи тут, если хочешь отключить проверку обновлений
-  --update("http://qrlk.me/dev/moonloader/giftmap-ny2022-gift/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods", "giftmapchangelog")
-  --openchangelog("giftmapchangelog", "http://qrlk.me/changelog/giftmap-halloween")
-  ---- вырежи тут, если хочешь отключить проверку обновлений
+  -- вырежи тут, если хочешь отключить проверку обновлений
+  update("http://qrlk.me/dev/moonloader/giftmap-ny2022-gift/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods", "giftmapny2022giftchangelog")
+  openchangelog("giftmapny2022giftchangelog", "https://github.com/qrlk/giftmap-ny2022/commits/main")
+  -- вырежи тут, если хочешь отключить проверку обновлений
 
 
   serverAddress = sampGetCurrentServerAddress()
