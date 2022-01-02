@@ -17,4 +17,4 @@ A **[moonloader](https://gtaforums.com/topic/890987-moonloader/)** scripts desig
 
 It requires **[CLEO 4+](http://cleo.li/?lang=ru)**, **[SAMPFUNCS 5+](https://blast.hk/threads/17/)** and **[SAMP.Lua](https://github.com/THE-FYP/SAMP.Lua)**.
 
-More info **[here]()** (in Russian).
+More info **[here](www.blast.hk/threads/115277/)** (in Russian).
