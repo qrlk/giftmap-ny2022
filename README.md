@@ -8,8 +8,8 @@
 <br>
 <img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28gift,%20active%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_active.php%3Fscript%3Dgiftmap-ny2022-gift">
 <img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28gift,%20all%20time%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_all.php%3Fscript%3Dgiftmap-ny2022-gift">
-<img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28gift,%20active%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_active.php%3Fscript%3Dgiftmap-ny2022-gift">
-<img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28gift,%20all%20time%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_all.php%3Fscript%3Dgiftmap-ny2022-gift">
+<img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28snow,%20active%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_active.php%3Fscript%3Dgiftmap-ny2022-snow">
+<img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28snow,%20all%20time%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_all.php%3Fscript%3Dgiftmap-ny2022-snow">
 </p>
 
 A **[moonloader](https://gtaforums.com/topic/890987-moonloader/)** scripts designed to cheat at the **[Samp-Rp's 2021-2022 NY event.](https://samp-rp.su/threads/ledovyj-katok-novogodnjaja-lavka-stroitelstvo-ploschadi-i-drugie-prazdnichnye-zadanija.2359470/)**.
