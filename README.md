@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/made%20for-GTA%20SA--MP-blue" >
 <img src="https://img.shields.io/badge/Server-Samp--Rp-red">
 <img src="https://img.shields.io/github/languages/top/qrlk/giftmap-halloween">
-<img src="https://img.shields.io/date/16357000600?label=released" >
+<img src="https://img.shields.io/date/1641084438?label=released" >
 <br>
 <img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28gift,%20active%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_active.php%3Fscript%3Dgiftmap-ny2022-gift">
 <img src="https://img.shields.io/badge/dynamic/json?color=blueviolet&label=users%20%28gift,%20all%20time%29&query=result&url=http%3A%2F%2Fqrlk.me%2Fdev%2Fmoonloader%2Fusers_all.php%3Fscript%3Dgiftmap-ny2022-gift">
