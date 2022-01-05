@@ -44,7 +44,14 @@ function main()
         map, checkpoints = {}, {}
       end
     else
-      sampShowDialog(5557, "\t"..chatTag.." by {2f72f7}Serhiy_Rubin{ffffff}, {348cb2}qrlk", "{FF5F5F}Активация{ffffff}:\nВведите {2f72f7}/giftmap-ny2022-gift{ffffff}, чтобы включить/выключить скрипт.\n\n{FF5F5F}Event{ffffff}:\nНа карте есть точки, где спавнятся подарки. Они спавнятся каждые 60-90 минут.\nТочное количество точек спавна не известно, респавнятся они не на всех точках, а на части.\nКогда точку подберут, она пропадёт и нужно ждать респавна.\nПодбирать их начав сюжетную линию 'Дом санты' (/nygps - [0]).\nподарки дают какие-то монетки, их можно менять на призы: аксессуары и мелочь всякую.\nСейчас скрипт знает о "..count.." точках спавна.\nКогда вы заметите подарок, он добавится в вашу локальную базу.\n\n{FF5F5F}Как это работает?{ffffff}\nНа радаре появятся метки точек спавна подарков в пределах 1200м.\nС помощью чекпоинтов вы сможете сориентироваться.\nВыйдя в меню и открыв карту, вы сможете увидеть все подарки.\nЕсли на точке ничего нет/не подбирается, значит, что подарок подобрали и надо ждать пока они респавнятся.\n\n{FF5F5F}Обозначения:{ffffff}\n* Маленькая белая метка - вне зоны прорисовки.\n* Большая красная метка - точка занята игроками.\n* Большая зелёная метка - точка свободна.\n* Большая голубая метка - на точке есть подарок (надо подойти на 25м).\n\n{FF5F5F}Ссылки:{ffffff}\n* https://github.com/qrlk/giftmap-ny2022\n* https://vk.com/rubin.mods", "OK")    end
+      sampShowDialog(5557, "\t"..chatTag.." by {2f72f7}Serhiy_Rubin{ffffff}, {348cb2}qrlk", "{FF5F5F}Активация{ffffff}:\nВведите {2f72f7}/giftmap-ny2022-gift{ffffff}, чтобы включить/выключить скрипт.\n\n{FF5F5F}Event{ffffff}:\nНа карте есть точки, где спавнятся подарки. Они спавнятся каждые 60-90 минут.\nТочное количество точек спавна не известно, респавнятся они не на всех точках, а на части.\nКогда точку подберут, она пропадёт и нужно ждать респавна.\nПодбирать их начав сюжетную линию 'Дом санты' (/nygps - [0]).\nподарки дают какие-то монетки, их можно менять на призы: аксессуары и мелочь всякую.\nСейчас скрипт знает о "..count.." точках спавна.\nКогда вы заметите подарок, он добавится в вашу локальную базу.\n\n{FF5F5F}Как это работает?{ffffff}\nНа радаре появятся метки точек спавна подарков.\nБольшая точка означает самую ближайшую точку.\nС помощью чекпоинтов вы сможете сориентироваться.\nВыйдя в меню и открыв карту, вы сможете увидеть все подарки.\nЕсли на точке ничего нет/не подбирается, значит, что подарок подобрали и надо ждать пока они респавнятся.\n\n{FF5F5F}Обозначения:{ffffff}\n* Маленькая белая метка - вне зоны прорисовки.\n* Большая красная метка - точка занята игроками.\n* Большая голубая метка - на точке есть подарок (надо подойти на 25м).\n\n{FF5F5F}Ссылки:{ffffff}\n* https://github.com/qrlk/giftmap-ny2022\n* https://vk.com/rubin.mods", "OK")
+      for key, coord in pairs(map_ico) do
+        if map[key] == nil then
+          map[key] = addBlipForCoord(coord.x, coord.y, coord.z)
+          changeBlipScale(map[key], 1)
+        end
+      end
+    end
 
     printStringNow((wh and "ON, DB: " .. count or "OFF, DB: " .. count), 1000)
   end
@@ -419,19 +426,25 @@ function main()
 
   inicfg.save(map_ico, "giftmap-ny2022-gift")
   sampAddChatMessage((chatTag .. " by {2f72f7}Serhiy_Rubin{ffffff} & {348cb2}qrlk{ffffff} successfully loaded!"), -1)
-
+  local bliz = 0
   while true do
     wait(500)
     if wh then
+      local dist = 99999
       for key, coord in pairs(map_ico) do
-        local x, y, z = getCharCoordinates(PLAYER_PED)
-        local distance = getDistanceBetweenCoords2d(coord.x, coord.y, x, y)
-        if not isPauseMenuActive() then
-          if distance < 1200 then
-            if map[key] == nil then
-              map[key] = addBlipForCoord(coord.x, coord.y, coord.z)
-              checkpoints[key] =
-              createCheckpoint(1, coord.x, coord.y, coord.z, coord.x, coord.y, coord.z, 5)
+        if map[key] ~= nil then
+          local x, y, z = getCharCoordinates(PLAYER_PED)
+          local distance = getDistanceBetweenCoords2d(coord.x, coord.y, x, y)
+          if not isPauseMenuActive() then
+            if distance < 400 then
+              if checkpoints[key] == nil then
+                checkpoints[key] = createCheckpoint(1, coord.x, coord.y, coord.z, coord.x, coord.y, coord.z, 5)
+              end
+            else
+              if checkpoints[key] ~= nil then
+                deleteCheckpoint(checkpoints[key])
+                checkpoints[key] = nil
+              end
             end
             if distance < 200 then
               changeBlipScale(map[key], 5)
@@ -442,34 +455,47 @@ function main()
                   changeBlipColour(map[key], 0xFF0000FF)
                 end
               else
-                if isAnyPickupAtCoords(coord.x, coord.y, coord.z) then
+                if findAllRandomObjectsInSphere(coord.x, coord.y, coord.z, 0.2, false) then
                   changeBlipColour(map[key], 0x00FFFFFF)
                 else
                   changeBlipColour(map[key], 0x00FF00FF)
                 end
               end
             else
-              changeBlipScale(map[key], 2)
+              changeBlipScale(map[key], 1)
               changeBlipColour(map[key], 0xFFFFFFFF)
             end
-          else
-            if map[key] ~= nil then
+            if distance < dist then
+              bliz = key
+              dist = distance
+            end
+            if distance < 10 then
               removeBlip(map[key])
+              deleteCheckpoint(checkpoints[key])
               map[key] = nil
 
-              deleteCheckpoint(checkpoints[key])
-              checkpoints[key] = nil
+              local cnt = 0
+              for key, coord in pairs(map) do
+                cnt = cnt + 1
+              end
+              local count = 0
+              for key, coord in pairs(map_ico) do
+                count = count + 1
+              end
+              printStringNow(cnt .. "/" .. count, 1000)
+
             end
-          end
-        else
-          if map[key] == nil then
-            map[key] = addBlipForCoord(coord.x, coord.y, coord.z)
-            checkpoints[key] = createCheckpoint(1, coord.x, coord.y, coord.z, coord.x, coord.y, coord.z, 5)
-            changeBlipScale(map[key], 2)
-            changeBlipColour(map[key], 0xFF2138eb)
+          else
+            if map[key] == nil then
+              map[key] = addBlipForCoord(coord.x, coord.y, coord.z)
+              checkpoints[key] = createCheckpoint(1, coord.x, coord.y, coord.z, coord.x, coord.y, coord.z, 5)
+              changeBlipScale(map[key], 2)
+              changeBlipColour(map[key], 0xFF2138eb)
+            end
           end
         end
       end
+      changeBlipScale(map[bliz], 8)
     end
   end
 end
@@ -498,6 +524,10 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
                   downloadUrlToFile("http://qrlk.me:16622/" .. encodeJson(message))
 
                   map_ico["x"..tostring(gift_string)] = { x = pos.x, y = pos.y, z = pos.z }
+                  map["x" .. tostring(gift_string)] = addBlipForCoord(pos.x, pos.y, pos.z)
+                  checkpoints["x" .. tostring(gift_string)] = createCheckpoint(1, pos.x, pos.y, pos.z, pos.x, pos.y, pos.z, 5)
+
+                  changeBlipScale(map["x" .. tostring(gift_string)], 1)
                   inicfg.save(map_ico, "giftmap-ny2022-gift")
                 end
               end
@@ -506,6 +536,13 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
         )
       end
     end
+  end
+end
+
+function sampev.onServerMessage(color, text)
+  if wh and text == " [New Year 2022]{FFFFFF} Подарки Санты были разбросаны по штату!" then
+    switch()
+    switch()
   end
 end
 
