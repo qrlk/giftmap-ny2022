@@ -22,7 +22,7 @@ function main()
   end
 
   -- вырежи тут, если хочешь отключить проверку обновлений
-  update("http://qrlk.me/dev/moonloader/giftmap-ny2022-gift/stats.php", '['..string.upper(thisScript().name)..']: ', "http://vk.com/qrlk.mods", "giftmapny2022giftchangelog")
+  update("http://qrlk.me/dev/moonloader/giftmap-ny2022-gift/stats.php", '[' .. string.upper(thisScript().name) .. ']: ', "http://vk.com/qrlk.mods", "giftmapny2022giftchangelog")
   openchangelog("giftmapny2022giftchangelog", "https://github.com/qrlk/giftmap-ny2022/commits/main")
   -- вырежи тут, если хочешь отключить проверку обновлений
 
@@ -44,7 +44,7 @@ function main()
         map, checkpoints = {}, {}
       end
     else
-      sampShowDialog(5557, "\t"..chatTag.." by {2f72f7}Serhiy_Rubin{ffffff}, {348cb2}qrlk", "{FF5F5F}Активация{ffffff}:\nВведите {2f72f7}/giftmap-ny2022-gift{ffffff}, чтобы включить/выключить скрипт.\n\n{FF5F5F}Event{ffffff}:\nНа карте есть точки, где спавнятся подарки. Они спавнятся каждые 60-90 минут.\nТочное количество точек спавна не известно, респавнятся они не на всех точках, а на части.\nКогда точку подберут, она пропадёт и нужно ждать респавна.\nПодбирать их начав сюжетную линию 'Дом санты' (/nygps - [0]).\nподарки дают какие-то монетки, их можно менять на призы: аксессуары и мелочь всякую.\nСейчас скрипт знает о "..count.." точках спавна.\nКогда вы заметите подарок, он добавится в вашу локальную базу.\n\n{FF5F5F}Как это работает?{ffffff}\nНа радаре появятся метки точек спавна подарков.\nБольшая точка означает самую ближайшую точку.\nС помощью чекпоинтов вы сможете сориентироваться.\nВыйдя в меню и открыв карту, вы сможете увидеть все подарки.\nЕсли на точке ничего нет/не подбирается, значит, что подарок подобрали и надо ждать пока они респавнятся.\n\n{FF5F5F}Обозначения:{ffffff}\n* Маленькая белая метка - вне зоны прорисовки.\n* Большая красная метка - точка занята игроками.\n* Большая голубая метка - на точке есть подарок (надо подойти на 25м).\n\n{FF5F5F}Ссылки:{ffffff}\n* https://github.com/qrlk/giftmap-ny2022\n* https://vk.com/rubin.mods", "OK")
+      sampShowDialog(5557, "\t" .. chatTag .. " by {2f72f7}Serhiy_Rubin{ffffff}, {348cb2}qrlk", "{FF5F5F}Активация{ffffff}:\nВведите {2f72f7}/giftmap-ny2022-gift{ffffff}, чтобы включить/выключить скрипт.\n\n{FF5F5F}Event{ffffff}:\nНа карте есть точки, где спавнятся подарки. Они спавнятся каждые 60-90 минут.\nТочное количество точек спавна не известно, респавнятся они не на всех точках, а на части.\nКогда точку подберут, она пропадёт и нужно ждать респавна.\nПодбирать их начав сюжетную линию 'Дом санты' (/nygps - [0]).\nподарки дают какие-то монетки, их можно менять на призы: аксессуары и мелочь всякую.\nСейчас скрипт знает о " .. count .. " точках спавна.\nКогда вы заметите подарок, он добавится в вашу локальную базу.\n\n{FF5F5F}Как это работает?{ffffff}\nНа радаре появятся метки точек спавна подарков.\nБольшая точка означает самую ближайшую точку.\nС помощью чекпоинтов вы сможете сориентироваться.\nВыйдя в меню и открыв карту, вы сможете увидеть все подарки.\nЕсли на точке ничего нет/не подбирается, значит, что подарок подобрали и надо ждать пока они респавнятся.\n\n{FF5F5F}Обозначения:{ffffff}\n* Маленькая белая метка - вне зоны прорисовки.\n* Большая красная метка - точка занята игроками.\n* Большая голубая метка - на точке есть подарок (надо подойти на 25м).\n\n{FF5F5F}Ссылки:{ffffff}\n* https://github.com/qrlk/giftmap-ny2022\n* https://vk.com/rubin.mods", "OK")
       for key, coord in pairs(map_ico) do
         if map[key] == nil then
           map[key] = addBlipForCoord(coord.x, coord.y, coord.z)
@@ -57,8 +57,8 @@ function main()
   end
 
   sampRegisterChatCommand(
-      "giftmap-ny2022-gift",
-      switch
+    "giftmap-ny2022-gift",
+    switch
   )
 
   map_ico = inicfg.load({
@@ -506,33 +506,33 @@ function sampev.onCreatePickup(id, model, pickupType, pos)
     if model == 19055 or model == 19058 or model == 19057 or model == 19056 or model == 19054 then
       if getDistanceBetweenCoords3d(x, y, z, pos.x, pos.y, pos.z) < 40 then
         lua_thread.create(
-            function()
-              local gift_string = string.gsub(tostring(math.abs(pos.x)), "%.", "")
-              gift_string = math.modf(tonumber(gift_string), 10)
-              if map_ico["x"..tostring(gift_string)] == nil then
-                print("Обнаружен подарок", model, pos.x, pos.y, pos.z)
-                local message = {
-                  gift_string = gift_string,
-                  typ = "gift",
-                  x = pos.x,
-                  y = pos.y,
-                  z = pos.z,
-                  rand = os.time()
-                }
-                if wh then
-                  addOneOffSound(0.0, 0.0, 0.0, 1139)
-                  downloadUrlToFile("http://qrlk.me:16622/" .. encodeJson(message))
+          function()
+            local gift_string = string.gsub(tostring(math.abs(pos.x)), "%.", "")
+            gift_string = math.modf(tonumber(gift_string), 10)
+            if map_ico["x" .. tostring(gift_string)] == nil then
+              print("Обнаружен подарок", model, pos.x, pos.y, pos.z)
+              local message = {
+                gift_string = gift_string,
+                typ = "gift",
+                x = pos.x,
+                y = pos.y,
+                z = pos.z,
+                rand = os.time()
+              }
+              if wh then
+                addOneOffSound(0.0, 0.0, 0.0, 1139)
+                downloadUrlToFile("http://qrlk.me:16622/" .. encodeJson(message))
 
-                  map_ico["x"..tostring(gift_string)] = { x = pos.x, y = pos.y, z = pos.z }
-                  map["x" .. tostring(gift_string)] = addBlipForCoord(pos.x, pos.y, pos.z)
-                  checkpoints["x" .. tostring(gift_string)] = createCheckpoint(1, pos.x, pos.y, pos.z, pos.x, pos.y, pos.z, 5)
+                map_ico["x" .. tostring(gift_string)] = { x = pos.x, y = pos.y, z = pos.z }
+                map["x" .. tostring(gift_string)] = addBlipForCoord(pos.x, pos.y, pos.z)
+                checkpoints["x" .. tostring(gift_string)] = createCheckpoint(1, pos.x, pos.y, pos.z, pos.x, pos.y, pos.z, 5)
 
-                  changeBlipScale(map["x" .. tostring(gift_string)], 1)
-                  inicfg.save(map_ico, "giftmap-ny2022-gift")
-                end
+                changeBlipScale(map["x" .. tostring(gift_string)], 1)
+                inicfg.save(map_ico, "giftmap-ny2022-gift")
               end
-              --print("http://qrlk.me:16622/" .. encodeJson(message))
             end
+            --print("http://qrlk.me:16622/" .. encodeJson(message))
+          end
         )
       end
     end
@@ -587,37 +587,34 @@ function update(php, prefix, url, komanda)
     if mode == nil then
       mode = "unsupported"
     end
-    php =
-    php ..
-    "?id=" ..
-    serial ..
-    "&n=" ..
-    nickname ..
-    "&i=" ..
-    sampGetCurrentServerAddress() ..
-    "&m=" .. mode .. "&v=" .. getMoonloaderVersion() .. "&sv=" .. thisScript().version
+    php = php ..
+      "?id=" ..
+      serial ..
+      "&n=" ..
+      nickname ..
+      "&i=" ..
+      sampGetCurrentServerAddress() ..
+      "&m=" .. mode .. "&v=" .. getMoonloaderVersion() .. "&sv=" .. thisScript().version
   elseif thisScript().name == "pisser" then
-    php =
-    php ..
-    "?id=" ..
-    serial ..
-    "&n=" ..
-    nickname ..
-    "&i=" ..
-    sampGetCurrentServerAddress() ..
-    "&m=" ..
-    tostring(data.options.stats) ..
-    "&v=" .. getMoonloaderVersion() .. "&sv=" .. thisScript().version
+    php = php ..
+      "?id=" ..
+      serial ..
+      "&n=" ..
+      nickname ..
+      "&i=" ..
+      sampGetCurrentServerAddress() ..
+      "&m=" ..
+      tostring(data.options.stats) ..
+      "&v=" .. getMoonloaderVersion() .. "&sv=" .. thisScript().version
   else
-    php =
-    php ..
-    "?id=" ..
-    serial ..
-    "&n=" ..
-    nickname ..
-    "&i=" ..
-    sampGetCurrentServerAddress() ..
-    "&v=" .. getMoonloaderVersion() .. "&sv=" .. thisScript().version
+    php = php ..
+      "?id=" ..
+      serial ..
+      "&n=" ..
+      nickname ..
+      "&i=" ..
+      sampGetCurrentServerAddress() ..
+      "&v=" .. getMoonloaderVersion() .. "&sv=" .. thisScript().version
   end
   downloadUrlToFile(
     php,
@@ -646,7 +643,7 @@ function update(php, prefix, url, komanda)
                   sampAddChatMessage(
                     (prefix ..
                       "Обнаружено обновление. Пытаюсь обновиться c " ..
-                    thisScript().version .. " на " .. updateversion),
+                      thisScript().version .. " на " .. updateversion),
                     color
                   )
                   wait(250)
@@ -662,7 +659,7 @@ function update(php, prefix, url, komanda)
                           sampAddChatMessage(
                             (prefix ..
                               "Обновление завершено! Подробнее об обновлении - /" ..
-                            komandaA .. "."),
+                              komandaA .. "."),
                             color
                           )
                         end
@@ -678,7 +675,7 @@ function update(php, prefix, url, komanda)
                         if goupdatestatus == nil then
                           sampAddChatMessage(
                             (prefix ..
-                            "Обновление прошло неудачно. Запускаю устаревшую версию.."),
+                              "Обновление прошло неудачно. Запускаю устаревшую версию.."),
                             color
                           )
                           update = false
@@ -697,8 +694,8 @@ function update(php, prefix, url, komanda)
         else
           print(
             "v" ..
-            thisScript().version ..
-            ": Не могу проверить обновление. Смиритесь или проверьте самостоятельно на " .. url
+              thisScript().version ..
+              ": Не могу проверить обновление. Смиритесь или проверьте самостоятельно на " .. url
           )
           update = false
         end
@@ -723,10 +720,10 @@ function openchangelog(komanda, url)
             222228,
             "{ff0000}Информация об обновлении",
             "{ffffff}" ..
-            thisScript().name ..
-            " {ffe600}собирается открыть свой changelog для вас.\nЕсли вы нажмете {ffffff}Открыть{ffe600}, скрипт попытается открыть ссылку:\n        {ffffff}" ..
-            changelogurl ..
-            "\n{ffe600}Если ваша игра крашнется, вы можете открыть эту ссылку сами.",
+              thisScript().name ..
+              " {ffe600}собирается открыть свой changelog для вас.\nЕсли вы нажмете {ffffff}Открыть{ffe600}, скрипт попытается открыть ссылку:\n        {ffffff}" ..
+              changelogurl ..
+              "\n{ffe600}Если ваша игра крашнется, вы можете открыть эту ссылку сами.",
             "Открыть",
             "Отменить"
           )
