@@ -1,7 +1,7 @@
 require 'lib.moonloader'
 
 script_name("/giftmap-ny2022-gift")
-script_version("05.01.2022-1")
+script_version("08.01.2022")
 script_author("Serhiy_Rubin", "qrlk")
 script_properties("work-in-pause")
 script_url("https://github.com/qrlk/giftmap-ny2022")
